@@ -13,6 +13,9 @@
 		72AB131620A448AC00683D57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72AB131520A448AC00683D57 /* Assets.xcassets */; };
 		72AB131920A448AC00683D57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72AB131720A448AC00683D57 /* LaunchScreen.storyboard */; };
 		72AB132120A456C400683D57 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AB132020A456C400683D57 /* CustomTableViewCell.swift */; };
+		72AB132320A4AABF00683D57 /* ApiRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AB132220A4AABF00683D57 /* ApiRequester.swift */; };
+		72AB132520A4B96600683D57 /* AllCitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AB132420A4B96600683D57 /* AllCitiesTableViewController.swift */; };
+		72AB132720A4BA7F00683D57 /* SecondCustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AB132620A4BA7F00683D57 /* SecondCustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		72AB131820A448AC00683D57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		72AB131A20A448AC00683D57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72AB132020A456C400683D57 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		72AB132220A4AABF00683D57 /* ApiRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequester.swift; sourceTree = "<group>"; };
+		72AB132420A4B96600683D57 /* AllCitiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCitiesTableViewController.swift; sourceTree = "<group>"; };
+		72AB132620A4BA7F00683D57 /* SecondCustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCustomTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +65,11 @@
 				72AB130E20A448AC00683D57 /* AppDelegate.swift */,
 				72AB131020A448AC00683D57 /* ViewController.swift */,
 				72AB131220A448AC00683D57 /* Main.storyboard */,
+				72AB132620A4BA7F00683D57 /* SecondCustomTableViewCell.swift */,
+				72AB132420A4B96600683D57 /* AllCitiesTableViewController.swift */,
 				72AB132020A456C400683D57 /* CustomTableViewCell.swift */,
 				72AB131520A448AC00683D57 /* Assets.xcassets */,
+				72AB132220A4AABF00683D57 /* ApiRequester.swift */,
 				72AB131720A448AC00683D57 /* LaunchScreen.storyboard */,
 				72AB131A20A448AC00683D57 /* Info.plist */,
 			);
@@ -142,6 +151,9 @@
 				72AB132120A456C400683D57 /* CustomTableViewCell.swift in Sources */,
 				72AB131120A448AC00683D57 /* ViewController.swift in Sources */,
 				72AB130F20A448AC00683D57 /* AppDelegate.swift in Sources */,
+				72AB132320A4AABF00683D57 /* ApiRequester.swift in Sources */,
+				72AB132720A4BA7F00683D57 /* SecondCustomTableViewCell.swift in Sources */,
+				72AB132520A4B96600683D57 /* AllCitiesTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
