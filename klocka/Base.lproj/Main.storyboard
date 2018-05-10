@@ -138,8 +138,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="clockView" destination="19G-mI-u6c" id="pcm-k7-tUH"/>
                         <outlet property="tableView" destination="6g1-n3-2YI" id="1eD-Tm-Ot9"/>
+                        <outlet property="timeLabel" destination="EjL-9l-Z7p" id="gQl-6f-4FL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
