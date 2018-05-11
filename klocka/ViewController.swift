@@ -49,3 +49,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 }
 
+//TODO: Can select multiple cities
+//TODO: Can serch for cities
+//TODO: Can search for countries, should i show "city, country"
+//TODO: save favorites in userdefaults
+//TODO: ska sökresultaten ha en tid eller kommer den först när staden blivit favoriter.
+//TODO: ska sökresultatet sparas ner i userdefaults som en array med dictionarys så gör man bara api anrop en gång i veckan? Då behövs en egen tidräknare för varje stad
+//TODO: Visare till klockan
+//TODO: knappen för att hitta nya städer ska ha rundade kanter
+//TODO: bakgrundsfärg eller bild
+
+

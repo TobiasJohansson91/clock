@@ -8,12 +8,14 @@
 
 import UIKit
 
-class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate {
+class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate, UISearchBarDelegate {
     let apiRequester = ApiRequester()
     var dataArray: [City] = []
+    var tableSourceArray: [City] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createSearchBar()
         apiRequester.delegate = self
         apiRequester.getAllCities()
     }
@@ -32,12 +34,12 @@ class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return dataArray.count
+        return tableSourceArray.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier2", for: indexPath) as! SecondCustomTableViewCell
-        cell.citiNameLabel.text = dataArray[indexPath.row].city
+        cell.citiNameLabel.text = tableSourceArray[indexPath.row].city
 
         return cell
     }
@@ -90,7 +92,28 @@ class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate {
     
     func getAllCities(cities: Cities) {
         dataArray = cities.locations
+        tableSourceArray = dataArray
         tableView.reloadData()
+    }
+    
+    func createSearchBar(){
+        let searchBar = UISearchBar()
+        searchBar.showsCancelButton = false
+        searchBar.placeholder = "Stad"
+        searchBar.delegate = self
+        
+        self.navigationItem.titleView = searchBar
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            tableSourceArray = dataArray
+            tableView.reloadData()
+        } else {
+            let text = searchText.lowercased()
+            tableSourceArray = dataArray.filter({$0.city.lowercased().contains(text)})
+            tableView.reloadData()
+        }
     }
 
 }
