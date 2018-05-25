@@ -8,21 +8,45 @@
 
 import UIKit
 
+protocol ChooseFavoriteCitiesDelegate {
+    func getChosenCities(cities: [[String:String]])
+}
+
 class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate, UISearchBarDelegate {
+    
     let apiRequester = ApiRequester()
-    var dataArray: [City] = []
-    var tableSourceArray: [City] = []
+    var dataArray: [[String:String]] = []
+    var tableSourceArray: [[String:String]] = []
+    var selectedCities: [[String:String]] = []
+    var delegate: ChooseFavoriteCitiesDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createSearchBar()
-        apiRequester.delegate = self
-        apiRequester.getAllCities()
+        dataArray = UserDefaultHandler().getCitiesFromUserDefaults()
+        if dataArray.count == 0 {
+            apiRequester.delegate = self
+            apiRequester.getAllCities()
+        }else {
+            tableSourceArray = dataArray
+        }
+        tableView.allowsMultipleSelection = true
+        
+        favoriteCitiesToSelectedCities()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        /*
+        print(tableView.indexPathsForSelectedRows)
+        print("is it working?")
+        guard let indexPaths = tableView.indexPathsForSelectedRows else{return}
+        var array: [[String:String]] = []
+        for path in indexPaths {
+            array.append(tableSourceArray[path.row])
+        }
+        //print(array)
+ */
+        delegate?.getChosenCities(cities: selectedCities)
     }
 
     // MARK: - Table view data source
@@ -39,11 +63,19 @@ class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate, U
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier2", for: indexPath) as! SecondCustomTableViewCell
-        cell.citiNameLabel.text = tableSourceArray[indexPath.row].city
-
+        let cityName = tableSourceArray[indexPath.row]["city"]!
+        cell.citiNameLabel.text = cityName
+        preSelectRows(cityName: cityName, indexPath: indexPath)
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCities.append(tableSourceArray[indexPath.row])
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        selectedCities = selectedCities.filter({$0["city"] != tableSourceArray[indexPath.row]["city"]})
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -90,10 +122,31 @@ class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate, U
     }
     */
     
-    func getAllCities(cities: Cities) {
-        dataArray = cities.locations
+    func getAllCities(cities: [[String:String]]) {
+        UserDefaultHandler().saveToUserDefaults(cities: cities)
+        dataArray = cities
         tableSourceArray = dataArray
         tableView.reloadData()
+        print(dataArray)
+    }
+    
+    func getCity(city: TheCity) {
+    }
+    
+    func preSelectRows(cityName: String, indexPath: IndexPath){
+        if selectedCities.contains(where: {$0["city"] == cityName}){
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
+        }
+        /*
+        let favorites = UserDefaultHandler().getFromUserDefaults()
+        print(favorites)
+        for city in favorites {
+            let index = tableSourceArray.index(where: {
+                return $0["city"] == city.cityName})
+            let indexPath = IndexPath(row: index!, section: 0)
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
+        }
+ */
     }
     
     func createSearchBar(){
@@ -111,8 +164,18 @@ class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate, U
             tableView.reloadData()
         } else {
             let text = searchText.lowercased()
-            tableSourceArray = dataArray.filter({$0.city.lowercased().contains(text)})
+            tableSourceArray = dataArray.filter({($0["city"]?.lowercased().contains(text))!})
             tableView.reloadData()
+        }
+    }
+    
+    func favoriteCitiesToSelectedCities(){
+        let favorites = UserDefaultHandler().getFromUserDefaults()
+        for city in favorites{
+            let element = dataArray.first(where: {$0["city"] == city.cityName})
+            if let element = element{
+                selectedCities.append(element)
+            }
         }
     }
 
