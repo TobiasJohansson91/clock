@@ -102,12 +102,29 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hux-U4-UqL" userLabel="HandContainer">
+                                        <rect key="frame" x="70" y="17" width="202" height="202"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="visareTrasparentHalvSmal" translatesAutoresizingMaskIntoConstraints="NO" id="PXy-Hp-SY9">
+                                                <rect key="frame" x="95" y="25" width="13" height="165"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="visareTrasparentHalvSmal" translatesAutoresizingMaskIntoConstraints="NO" id="jQr-ay-sco">
+                                                <rect key="frame" x="105" y="47" width="13" height="120"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                        </subviews>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="Hux-U4-UqL" firstAttribute="leading" secondItem="ejX-kx-1NZ" secondAttribute="leading" id="5hN-dN-gWv"/>
+                                    <constraint firstItem="Hux-U4-UqL" firstAttribute="height" secondItem="ejX-kx-1NZ" secondAttribute="height" id="AeF-AG-KFi"/>
                                     <constraint firstItem="CbC-Bg-1m3" firstAttribute="centerX" secondItem="19G-mI-u6c" secondAttribute="centerX" id="I1L-9A-ATP"/>
                                     <constraint firstItem="ejX-kx-1NZ" firstAttribute="centerY" secondItem="19G-mI-u6c" secondAttribute="centerY" multiplier="0.8" id="MmH-Tl-0m5"/>
+                                    <constraint firstItem="Hux-U4-UqL" firstAttribute="top" secondItem="ejX-kx-1NZ" secondAttribute="top" id="SD2-nV-Wos"/>
                                     <constraint firstItem="ejX-kx-1NZ" firstAttribute="centerX" secondItem="19G-mI-u6c" secondAttribute="centerX" id="SlB-c4-9vc"/>
+                                    <constraint firstItem="Hux-U4-UqL" firstAttribute="width" secondItem="ejX-kx-1NZ" secondAttribute="width" id="bkN-RF-Mqt"/>
                                     <constraint firstItem="ejX-kx-1NZ" firstAttribute="leading" secondItem="19G-mI-u6c" secondAttribute="leading" constant="70" id="mng-f3-ZoP"/>
                                     <constraint firstItem="CbC-Bg-1m3" firstAttribute="top" secondItem="ejX-kx-1NZ" secondAttribute="bottom" constant="8" id="yzF-3H-QZd"/>
                                 </constraints>
@@ -152,6 +169,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="Gyf-Vq-Ezq"/>
                     <connections>
+                        <outlet property="handContainer" destination="Hux-U4-UqL" id="vTZ-Yb-qxd"/>
+                        <outlet property="hourHand" destination="jQr-ay-sco" id="uuP-Hw-icp"/>
+                        <outlet property="minuteHand" destination="PXy-Hp-SY9" id="Rxz-Jn-coF"/>
                         <outlet property="tableView" destination="6g1-n3-2YI" id="1eD-Tm-Ot9"/>
                         <outlet property="timeLabel" destination="EjL-9l-Z7p" id="gQl-6f-4FL"/>
                     </connections>
@@ -236,5 +256,6 @@
     <resources>
         <image name="clock" width="958" height="958"/>
         <image name="globe" width="225" height="225"/>
+        <image name="visareTrasparentHalvSmal" width="8" height="100"/>
     </resources>
 </document>

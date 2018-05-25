@@ -93,9 +93,3 @@ struct OneCity: Decodable {
     let time: String
     let offset: Int
 }
-/*
-struct TheCity {
-    let cityName: String
-    let time: String
-}
- */

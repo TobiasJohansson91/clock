@@ -36,28 +36,16 @@ class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate, U
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        /*
-        print(tableView.indexPathsForSelectedRows)
-        print("is it working?")
-        guard let indexPaths = tableView.indexPathsForSelectedRows else{return}
-        var array: [[String:String]] = []
-        for path in indexPaths {
-            array.append(tableSourceArray[path.row])
-        }
-        //print(array)
- */
         delegate?.getChosenCities(cities: selectedCities)
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return tableSourceArray.count
     }
 
@@ -137,16 +125,6 @@ class AllCitiesTableViewController: UITableViewController, ApiRequestDelegate, U
         if selectedCities.contains(where: {$0["city"] == cityName}){
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
         }
-        /*
-        let favorites = UserDefaultHandler().getFromUserDefaults()
-        print(favorites)
-        for city in favorites {
-            let index = tableSourceArray.index(where: {
-                return $0["city"] == city.cityName})
-            let indexPath = IndexPath(row: index!, section: 0)
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
-        }
- */
     }
     
     func createSearchBar(){

@@ -12,24 +12,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var handContainer: UIView!
+    @IBOutlet weak var hourHand: UIImageView!
+    @IBOutlet weak var minuteHand: UIImageView!
+    var handsWidth: CGFloat!
+    var minHandHeight: CGFloat!
+    var hourHandHeight: CGFloat!
     var favoriteCities: [TheCity] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        formatDate()
-        Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(formatDate), userInfo: nil, repeats: true)
         favoriteCities = UserDefaultHandler().getFromUserDefaults()
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        formatter.dateFormat = "HH:mm EEE dd MMMM"
+        timeLabel.text = formatter.string(from: Date())
         
         Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(reloadTable), userInfo: nil, repeats: true)
-        /*
-        getChosenCities(cities: favoriteCities)
-        for city in favoriteCities {
-            print(city.cityName)
-        }
-        */
-        //UserDefaultHandler().saveToUserDefaults(cities: [])
-        //UserDefaultHandler().saveToUserdefaults(cityArray: [])
-        //UserDefaultHandler().getCitiesFromUserDefaults()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        handsWidth = handContainer.frame.width * 0.064
+        hourHandHeight = handContainer.frame.height * 0.594
+        minHandHeight = handContainer.frame.height * 0.817
+        let middleX = handContainer.frame.width / 2
+        let middleY = handContainer.frame.height / 2
+        
+        hourHand.frame = CGRect(x: middleX - (handsWidth/2), y: middleY - hourHandHeight/2, width: handsWidth, height: hourHandHeight)
+        minuteHand.frame = CGRect(x: middleX - (handsWidth/2), y: middleY - minHandHeight/2, width: handsWidth, height: minHandHeight)
+        
+        setAnalogClock()
+        Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(formatDate), userInfo: nil, repeats: true)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -44,7 +57,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath) as! CustomTableViewCell
         let city = favoriteCities[indexPath.row]
         cell.cityNameLabel.text = city.cityName
-        cell.dateLabel.text = "10/5"
+        cell.dateLabel.text = TheCity.getDateByOffset(cityOffset: city.offset) 
         cell.timeLabel.text = TheCity.calcTime(cityOffset: city.offset) 
         return cell
     }
@@ -54,6 +67,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         formatter.locale = Locale(identifier: Locale.current.identifier)
         formatter.dateFormat = "HH:mm EEE dd MMMM"
         timeLabel.text = formatter.string(from: Date())
+        tick()
     }
     
     func getChosenCities(cities: [[String:String]]) {
@@ -78,17 +92,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             apiRequster.getCityTimeZone(cityName: city)
         }
     }
-    /*
-    func getChosenCities(cities: [TheCity]) {
-        print(cities)
-        let apiRequster = ApiRequester()
-        apiRequster.delegate = self
-        for city in cities {
-            print("requster")
-            apiRequster.getCityTimeZone(cityName: city.cityName)
-        }
-    }
- */
     
     func getCity(city: TheCity) {
         if !favoriteCities.contains(where: {$0.cityName == city.cityName}) {
@@ -110,6 +113,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.reloadData()
     }
     
+    func setAnalogClock() {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        formatter.dateFormat = "HH:mm"
+        let time = formatter.string(from: Date())
+        var hour = CGFloat(Int(String(time.prefix(2)))!)
+        let min = CGFloat(Int(String(time.suffix(2)))!)
+        if hour > 12 {hour -= 12 }
+        let moveHour = CGFloat.pi/360 * hour * 60
+        let moveMin = CGFloat.pi/30 * min
+        print(hour, min)
+        self.hourHand.transform = self.hourHand.transform.rotated(by: moveHour)
+        self.minuteHand.transform = self.minuteHand.transform.rotated(by: moveMin)
+    }
+    
+    func tick() {
+        let moveMin = CGFloat.pi/30
+        let moveHour = CGFloat.pi/360
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.minuteHand.transform = self.minuteHand.transform.rotated(by: moveMin)
+        })
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.hourHand.transform = self.hourHand.transform.rotated(by: moveHour)
+        })
+    }
 }
 
 //TODO: Can select multiple cities - KLAR

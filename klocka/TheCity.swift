@@ -44,31 +44,14 @@ class TheCity: NSObject, NSCoding {
     formatter2.dateFormat = "HH:mm"
     formatter2.timeZone = TimeZone(secondsFromGMT: offsetInSec)
     return formatter2.string(from: Date())
+    }
     
-    /*
-    var extraDay = 0
-        let myTime = getTime()
-    print(myTime)
-    print(cityOffset)
-        if cityOffset == 0 {
-            return myTime
-        }
-        let min = Int(myTime.prefix(2))!
-        var hours = Int(myTime.suffix(2))!
-        let offsetMin = cityOffset%60
-        let offsetHours = cityOffset/60
-        var newMin = min + offsetMin
-        if newMin >= 60{
-            hours -= 1
-            newMin -= 60
-        }
-        var newHours = hours + offsetHours
-        if newHours >= 24{
-            newHours -= 24
-            extraDay = 1
-        }
-        let newTime = "\(newHours):\(newMin)"
-        return newTime
- */
+    static func getDateByOffset(cityOffset: Int) -> String {
+        let offsetInSec = cityOffset * 60
+        let formatter3 = DateFormatter()
+        formatter3.locale = Locale(identifier: Locale.current.identifier)
+        formatter3.setLocalizedDateFormatFromTemplate("MMd")
+        formatter3.timeZone = TimeZone(secondsFromGMT: offsetInSec)
+        return formatter3.string(from: Date())
     }
 }
