@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var minHandHeight: CGFloat!
     var hourHandHeight: CGFloat!
     var favoriteCities: [TheCity] = []
+    var count = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +33,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        handsWidth = handContainer.frame.width * 0.064
-        hourHandHeight = handContainer.frame.height * 0.594
-        minHandHeight = handContainer.frame.height * 0.817
-        let middleX = handContainer.frame.width / 2
-        let middleY = handContainer.frame.height / 2
-        
-        hourHand.frame = CGRect(x: middleX - (handsWidth/2), y: middleY - hourHandHeight/2, width: handsWidth, height: hourHandHeight)
-        minuteHand.frame = CGRect(x: middleX - (handsWidth/2), y: middleY - minHandHeight/2, width: handsWidth, height: minHandHeight)
-        
-        setAnalogClock()
-        Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(formatDate), userInfo: nil, repeats: true)
+        if count {
+            handsWidth = handContainer.frame.width * 0.064
+            hourHandHeight = handContainer.frame.height * 0.594
+            minHandHeight = handContainer.frame.height * 0.817
+            let middleX = handContainer.frame.width / 2
+            let middleY = handContainer.frame.height / 2
+            
+            hourHand.frame = CGRect(x: middleX - (handsWidth/2), y: middleY - hourHandHeight/2, width: handsWidth, height: hourHandHeight)
+            minuteHand.frame = CGRect(x: middleX - (handsWidth/2), y: middleY - minHandHeight/2, width: handsWidth, height: minHandHeight)
+            
+            setAnalogClock()
+            Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(formatDate), userInfo: nil, repeats: true)
+            count = false
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
